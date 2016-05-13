@@ -119,6 +119,7 @@ public class Processo extends Thread {
 				deadline = -1;
 				lblQuantum.setVisible(true);
 				lblQuantumValue.setVisible(true);
+				lblQuantumValue.updateUI();
 				start();
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -129,7 +130,7 @@ public class Processo extends Thread {
 				quantum = -1;
 				lblDLine.setVisible(true);
 				lblDLineValue.setVisible(true);
-				start();
+				//start();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -192,9 +193,11 @@ public class Processo extends Thread {
 
 	public void diminuirQuantum() {
 		this.quantum--;
+		
 		lblQuantumValue.setText(quantum+"s");
 		lblQuantumValue.revalidate();
 		lblQuantumValue.repaint();
+		lblQuantumValue.updateUI();
 	}
 
 	public void terminar(Core c) {

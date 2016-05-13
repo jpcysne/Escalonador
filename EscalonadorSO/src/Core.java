@@ -66,7 +66,7 @@ public class Core extends Thread {
 		// e1.printStackTrace();
 		// }
 		while (true) {
-			if (processo != null) {
+			if (haveProcess()) {
 				if (processo.getTempoRest() > 0) {
 					processo.diminuirTRest();
 
@@ -74,7 +74,7 @@ public class Core extends Thread {
 					terminarProcesso();
 
 				}
-				if (processo != null) {
+				if (haveProcess()) {
 					if (processo.getQuantum() >= 0) {
 						processo.diminuirQuantum();
 						if (processo.getQuantum() == 0) {
