@@ -94,7 +94,7 @@ public class AlgoritmoRR extends Escalonador {
 					break;
 				case 1:
 					if (!aptos2.isEmpty()) {
-						aptos2.get(0).setQuantum(2 * quantum);
+						aptos2.get(0).setQuantum(3 * quantum);
 						aptos2.get(0).lblQuantumValue.setText(aptos2.get(0).getQuantum() + "s");
 						aptos2.get(0).lblQuantumValue.setVisible(true);
 						aptos2.get(0).lblQuantum.setVisible(true);
@@ -106,7 +106,7 @@ public class AlgoritmoRR extends Escalonador {
 					break;
 				case 2:
 					if (!aptos3.isEmpty()) {
-						aptos3.get(0).setQuantum(3 * quantum);
+						aptos3.get(0).setQuantum(2 * quantum);
 						aptos3.get(0).lblQuantumValue.setText(aptos3.get(0).getQuantum() + "s");
 						aptos3.get(0).lblQuantumValue.setVisible(true);
 						aptos3.get(0).lblQuantum.setVisible(true);
@@ -118,7 +118,7 @@ public class AlgoritmoRR extends Escalonador {
 					break;
 				case 3:
 					if (!aptos4.isEmpty()) {
-						aptos4.get(0).setQuantum(quantum);
+						aptos4.get(0).setQuantum(1 * quantum);
 						aptos4.get(0).lblQuantumValue.setText(aptos4.get(0).getQuantum() + "s");
 						aptos4.get(0).lblQuantumValue.setVisible(true);
 						aptos4.get(0).lblQuantum.setVisible(true);

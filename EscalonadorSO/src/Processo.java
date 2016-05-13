@@ -115,12 +115,25 @@ public class Processo extends Thread {
 		panel.add(lblQuantumValue);
 
 		if (escalonador instanceof AlgoritmoRR) {
-			deadline = -1;
+			try {
+				deadline = -1;
+				lblQuantum.setVisible(true);
+				lblQuantumValue.setVisible(true);
+				start();
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
+			
 		} else if (escalonador instanceof AlgoritmoLTG) {
-			quantum = -1;
-			lblDLine.setVisible(true);
-			lblDLineValue.setVisible(true);
-			start();
+			try {
+				quantum = -1;
+				lblDLine.setVisible(true);
+				lblDLineValue.setVisible(true);
+				start();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
 
@@ -201,9 +214,16 @@ public class Processo extends Thread {
 				lblDLineValue.setText(deadline + "s");
 				escalonador.repintar();
 			} else {
-				diminuirDLine();
-				((AlgoritmoLTG) escalonador).dlineZero(this);
-			}
+				try {
+					synchronized (this) {
+						diminuirDLine();
+						((AlgoritmoLTG) escalonador).dlineZero(this);
+					}
+					
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+				}
 			try {
 				sleep(1000);
 			} catch (InterruptedException e) {

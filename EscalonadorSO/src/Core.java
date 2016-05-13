@@ -75,7 +75,7 @@ public class Core extends Thread {
 
 				}
 				if (processo != null) {
-					if (processo.getQuantum() > 0) {
+					if (processo.getQuantum() >= 0) {
 						processo.diminuirQuantum();
 						if (processo.getQuantum() == 0) {
 							processo.quantumZero(this);
