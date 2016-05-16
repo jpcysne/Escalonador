@@ -11,10 +11,12 @@ public class AlgoritmoRR extends Escalonador {
 	private int lastQ;
 	private int quantum;
 	private int qCores;
+	GerenciadorDeMemoria gm;
 
-	public AlgoritmoRR(int qCores, int qProcIni, int Quantum) {
+	public AlgoritmoRR(int qCores, int qProcIni, int Quantum, GerenciadorDeMemoria gm) {
 		super();
-		this.qCores = qCores;
+		this.gm=gm;
+		//this.qCores = qCores;
 		quantum = Quantum;
 		for (int i = 0; i < qCores; i++) {
 			Core c = new Core();
@@ -79,7 +81,7 @@ public class AlgoritmoRR extends Escalonador {
 	public void escalonar() {
 		for (int i = 0; i < cores.size(); i++) {
 			if (!cores.get(i).haveProcess()) {
-				switch (lastQ%4) {
+				switch (lastQ) {
 				case 0:
 					if (!aptos.isEmpty()) {
 						aptos.get(0).setQuantum(4 * quantum);
@@ -90,8 +92,10 @@ public class AlgoritmoRR extends Escalonador {
 						removeCores();
 						reAddCores();
 						aptos.remove(0);
+						lastQ=0;
+						break;
 					}
-					break;
+					
 				case 1:
 					if (!aptos2.isEmpty()) {
 						aptos2.get(0).setQuantum(3 * quantum);
@@ -102,8 +106,10 @@ public class AlgoritmoRR extends Escalonador {
 						removeCores();
 						reAddCores();
 						aptos2.remove(0);
+						lastQ=1;
+						break;
 					}
-					break;
+					
 				case 2:
 					if (!aptos3.isEmpty()) {
 						aptos3.get(0).setQuantum(2 * quantum);
@@ -114,8 +120,10 @@ public class AlgoritmoRR extends Escalonador {
 						removeCores();
 						reAddCores();
 						aptos3.remove(0);
+						lastQ=2;
+						break;
 					}
-					break;
+					
 				case 3:
 					if (!aptos4.isEmpty()) {
 						aptos4.get(0).setQuantum(1 * quantum);
@@ -126,12 +134,17 @@ public class AlgoritmoRR extends Escalonador {
 						removeCores();
 						reAddCores();
 						aptos4.remove(0);
+						lastQ=3;
+						break;
+						
 					}
-					break;
+					
 				}
 				lastQ++;
-			} else
-				break;
+				if(lastQ==4){
+					lastQ=0;
+				}
+			} 
 		}
 	}
 

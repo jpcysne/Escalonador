@@ -20,12 +20,13 @@ public abstract class Escalonador {
 	private JScrollPane jsCores;
 	private JScrollPane jsAptos;
 	private JScrollPane jsTerminados;
-	protected JPanel pCores;
+	private JPanel pCores;
 	private JPanel pAptos;
 	private JPanel pTerminados;
 	private JTextField textField;
+	private JScrollPane jsBlocos;
+	private JPanel pBlocos;
 	Thread t;
-
 	/**
 	 * Launch the application.
 	 */
@@ -48,7 +49,6 @@ public abstract class Escalonador {
 	public Escalonador() {
 		initialize();
 	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -124,7 +124,22 @@ public abstract class Escalonador {
 		});
 		btnAdicionar.setBounds(355, 190, 90, 25);
 		frame.getContentPane().add(btnAdicionar);
+		
+		JLabel labelGM = new JLabel("Gerenciador de Memoria");
+		labelGM.setForeground(Color.GREEN);
+		labelGM.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		labelGM.setBounds(15, 420, 150, 25);
+		frame.getContentPane().add(labelGM);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		pBlocos = new JPanel();
+		pBlocos.setBounds(15, 445, 720, 80);
+		pBlocos.setBackground(new Color(255, 127, 80));
+		frame.getContentPane().add(pBlocos);
+		jsBlocos = new JScrollPane(pBlocos);
+		jsBlocos.setBounds(15, 445, 720, 80);
+		frame.getContentPane().add(jsBlocos);
+		
 		t = new Thread(){
 			public void run() {
 				while(true){
@@ -138,7 +153,7 @@ public abstract class Escalonador {
 				}
 			};
 		};
-		t.start();
+	t.start();
 	}
 
 	public abstract void addProcess();
@@ -210,9 +225,11 @@ public abstract class Escalonador {
 		pCores.repaint();
 		pTerminados.revalidate();
 		pTerminados.repaint();
-
+		pBlocos.revalidate();
+		pBlocos.repaint();
 	}
 	
-	
-
+	public void addBloco(Bloco c){
+		pBlocos.add(c.getPanel());
+	}
 }

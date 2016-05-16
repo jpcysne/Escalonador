@@ -5,10 +5,10 @@ public class AlgoritmoLTG extends Escalonador {
 	ArrayList<Processo> aptos = new ArrayList<Processo>();
 	ArrayList<Processo> terminados = new ArrayList<Processo>();
 	ArrayList<Core> cores = new ArrayList<Core>();
-
-	public AlgoritmoLTG(int qCores, int qProcIni) {
+	GerenciadorDeMemoria gm;
+	public AlgoritmoLTG(int qCores, int qProcIni, GerenciadorDeMemoria gm) {
 		super();
-
+		this.gm=gm;
 		for (int i = 0; i < qCores; i++) {
 			Core c = new Core();
 			cores.add(c);
@@ -37,6 +37,7 @@ public class AlgoritmoLTG extends Escalonador {
 			for (Processo a : aptos) {
 				addAptos(a);
 			}
+			
 		}
 	}
 
@@ -70,19 +71,19 @@ public class AlgoritmoLTG extends Escalonador {
 
 	@Override
 	public void escalonar() {
-
+		
 		for (int i = 0; i < cores.size(); i++) {
 			if (!cores.get(i).haveProcess()) {
 				if (!aptos.isEmpty()) {
 					cores.get(i).setProcesso(aptos.get(0));
 					removeCores();
 					reAddCores();
-					// readdCores();
+					//readdCores();
 					aptos.remove(0);
 					repintar();
 				} else
 					break;
-			}
+		}
 		}
 	}
 
@@ -109,4 +110,5 @@ public class AlgoritmoLTG extends Escalonador {
 		repintar();
 	}
 
+		
 }

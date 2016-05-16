@@ -48,13 +48,13 @@ public class TelaInicial {
 		frame.getContentPane().setBackground(new Color(139, 0, 0));
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("LTG");
+		JButton btnNewButton = new JButton("Best Fit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.dispose();
-				TelaConfigLTG cltg = new TelaConfigLTG();
-				cltg.getFrame().setLocation(300, 7);
-				cltg.getFrame().setVisible(true);				
+				TelaConfigBF cbf = new TelaConfigBF();
+				cbf.getFrame().setLocation(300, 7);
+				cbf.getFrame().setVisible(true);				
 			}
 		});
 		btnNewButton.setBounds(325, 290, 175, 25);
@@ -71,21 +71,29 @@ public class TelaInicial {
 		frame.getContentPane().add(txtTrabalhoDeSo);
 		txtTrabalhoDeSo.setColumns(20);
 		
-		JButton btnFilaComRoundrobin = new JButton("Fila com Round-Robin");
-		btnFilaComRoundrobin.addActionListener(new ActionListener() {
+		JButton btnMergeFit = new JButton("Merge Fit");
+		btnMergeFit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				frame.dispose();
-				TelaConfigRR crr = new TelaConfigRR();
-				crr.getFrame().setLocation(300, 7);
-				crr.getFrame().setVisible(true);
+				TelaConfigMF cmf = new TelaConfigMF();
+				cmf.getFrame().setLocation(300, 7);
+				cmf.getFrame().setVisible(true);
 			}
 		});
-		btnFilaComRoundrobin.setBounds(325, 335, 175, 23);
-		frame.getContentPane().add(btnFilaComRoundrobin);
+		btnMergeFit.setBounds(325, 335, 175, 23);
+		frame.getContentPane().add(btnMergeFit);
 		
-		JButton btnIntervalbased = new JButton("Interval-Based");
-		btnIntervalbased.setBounds(325, 375, 175, 25);
-		frame.getContentPane().add(btnIntervalbased);
+		JButton bQuickFit = new JButton("Quick Fit");
+		bQuickFit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				frame.dispose();
+				TelaConfigQF cqf = new TelaConfigQF();
+				cqf.getFrame().setLocation(300, 7);
+				cqf.getFrame().setVisible(true);
+			}
+		});
+		bQuickFit.setBounds(325, 375, 175, 25);
+		frame.getContentPane().add(bQuickFit);
 		frame.setBounds(100, 100, 800, 720);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		

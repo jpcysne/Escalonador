@@ -23,6 +23,7 @@ public class Processo extends Thread {
 	JLabel lblQuantum;
 	JLabel lblDLineValue;
 	JLabel lblDLine;
+	private int memoria = r.nextInt(992)+32;
 
 	/**
 	 * Launch the application.

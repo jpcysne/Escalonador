@@ -24,7 +24,7 @@ public class TelaConfigRR {
 	private int qntCores;
 	private int qntProc;
 	private int quantum;
-
+	private GerenciadorDeMemoria gm;
 	/**
 	 * Launch the application.
 	 */
@@ -45,6 +45,11 @@ public class TelaConfigRR {
 	 * Create the application.
 	 */
 	public TelaConfigRR() {
+		initialize();
+	}
+
+	public TelaConfigRR(GerenciadorDeMemoria gm) {
+		this.gm=gm;
 		initialize();
 	}
 
@@ -138,7 +143,7 @@ public class TelaConfigRR {
 						lblErro4.setVisible(true);
 					} else {
 						frame.dispose();
-						Escalonador esc = new AlgoritmoRR(qntCores,qntProc,quantum);
+						Escalonador esc = new AlgoritmoRR(qntCores,qntProc,quantum,gm);
 						esc.getFrame().setLocation(300,7);
 						esc.getFrame().setVisible(true);
 					}

@@ -21,7 +21,7 @@ public class TelaConfigLTG {
 	private JTextField tfQntProc;
 	private int qntCores;
 	private int qntProc;
-	
+	GerenciadorDeMemoria gm;
 
 	/**
 	 * Launch the application.
@@ -43,6 +43,12 @@ public class TelaConfigLTG {
 	 * Create the application.
 	 */
 	public TelaConfigLTG() {
+		initialize();
+	}
+
+	public TelaConfigLTG(GerenciadorDeMemoria gm) {
+		// TODO Auto-generated constructor stub
+		this.gm=gm;
 		initialize();
 	}
 
@@ -115,7 +121,7 @@ public class TelaConfigLTG {
 						lblErro2.setVisible(true);
 					} else {
 						frame.dispose();
-						Escalonador esc = new AlgoritmoLTG(qntCores, qntProc);
+						Escalonador esc = new AlgoritmoLTG(qntCores, qntProc,gm);
 						esc.getFrame().setLocation(300, 7);
 						esc.getFrame().setVisible(true);
 					}
