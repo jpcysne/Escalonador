@@ -71,20 +71,21 @@ public class AlgoritmoLTG extends Escalonador {
 
 	@Override
 	public void escalonar() {
+		synchronized (this) {
+			for (int i = 0; i < cores.size(); i++) {
+				if (!cores.get(i).haveProcess()) {
+					if (!aptos.isEmpty()) {
+						cores.get(i).setProcesso(aptos.get(0));
+						removeCores();
+						reAddCores();
+						//readdCores();
+						aptos.remove(0);
+						repintar();
+					} 
+			}
+			}
+		}
 		
-		for (int i = 0; i < cores.size(); i++) {
-			if (!cores.get(i).haveProcess()) {
-				if (!aptos.isEmpty()) {
-					cores.get(i).setProcesso(aptos.get(0));
-					removeCores();
-					reAddCores();
-					//readdCores();
-					aptos.remove(0);
-					repintar();
-				} else
-					break;
-		}
-		}
 	}
 
 	private void reAddCores() {
