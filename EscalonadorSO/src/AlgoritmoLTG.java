@@ -6,9 +6,10 @@ public class AlgoritmoLTG extends Escalonador {
 	ArrayList<Processo> terminados = new ArrayList<Processo>();
 	ArrayList<Core> cores = new ArrayList<Core>();
 	GerenciadorDeMemoria gm;
+
 	public AlgoritmoLTG(int qCores, int qProcIni, GerenciadorDeMemoria gm) {
 		super();
-		this.gm=gm;
+		this.gm = gm;
 		for (int i = 0; i < qCores; i++) {
 			Core c = new Core();
 			cores.add(c);
@@ -37,7 +38,7 @@ public class AlgoritmoLTG extends Escalonador {
 			for (Processo a : aptos) {
 				addAptos(a);
 			}
-			
+
 		}
 	}
 
@@ -70,22 +71,33 @@ public class AlgoritmoLTG extends Escalonador {
 	}
 
 	@Override
-	public void escalonar() {
-		synchronized (this) {
-			for (int i = 0; i < cores.size(); i++) {
-				if (!cores.get(i).haveProcess()) {
-					if (!aptos.isEmpty()) {
+	public synchronized void escalonar() {
+
+		for (int i = 0; i < cores.size(); i++) {
+			if (!cores.get(i).haveProcess()) {
+				if (!aptos.isEmpty()) {
+					Bloco b = gm.alocar(aptos.get(0));
+					if (b != null) {
 						cores.get(i).setProcesso(aptos.get(0));
 						removeCores();
 						reAddCores();
-						//readdCores();
+						// readdCores();
 						aptos.remove(0);
 						repintar();
-					} 
-			}
+					} else {
+						aptos.get(0).abortar();
+						terminados.add(aptos.get(0));
+						removeAptos(aptos.get(0));
+						addTerminados(aptos.get(0));
+						
+						aptos.remove(aptos.get(0));
+						repintar();
+					}
+				}else{
+					break;
+				}
 			}
 		}
-		
 	}
 
 	private void reAddCores() {
@@ -98,18 +110,31 @@ public class AlgoritmoLTG extends Escalonador {
 	public void terminar(Core c) {
 		terminados.add(c.getProcesso());
 		addTerminados(c.getProcesso());
-		removerCore(c);
+		repintarCore(c);
+		gm.desalocar(c.getProcesso());
 		escalonar();
 	}
 
+	public void abortarEscalonado(Processo p) {
+		for (Core c : cores) {
+			if (c.getProcesso().equals(p)) {
+				terminados.add(c.getProcesso());
+				addTerminados(c.getProcesso());
+				c.removerProcesso();
+				gm.desalocar(c.getProcesso());
+				repintar();
+				escalonar();
+				break;
+			}
+		}
+	}
+
 	public void dlineZero(Processo p) {
-		aptos.remove(p);
 		p.abortar();
 		terminados.add(p);
 		removeAptos(p);
 		addTerminados(p);
+		aptos.remove(p);
 		repintar();
 	}
-
-		
 }

@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 public class Core extends Thread {
 	JPanel panel;
 	private Processo processo = null;
-
+	boolean correr=true;
 	public Core() {
 		panel = new JPanel();
 		panel.setPreferredSize(new Dimension(110, 52));
@@ -65,8 +65,8 @@ public class Core extends Thread {
 		// // TODO Auto-generated catch block
 		// e1.printStackTrace();
 		// }
-		while (true) {
-			if (haveProcess()) {
+		while (correr) {
+			if (processo != null) {
 				if (processo.getTempoRest() > 0) {
 					processo.diminuirTRest();
 
@@ -74,8 +74,8 @@ public class Core extends Thread {
 					terminarProcesso();
 
 				}
-				if (haveProcess()) {
-					if (processo.getQuantum() >= 0) {
+				if (processo != null) {
+					if (processo.getQuantum() > 0) {
 						processo.diminuirQuantum();
 						if (processo.getQuantum() == 0) {
 							processo.quantumZero(this);

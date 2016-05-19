@@ -10,6 +10,10 @@ public class Bloco {
 	private int tamanho;
 	private int espacoUsado;
 	private JPanel panel;
+	private Processo proc;
+	JLabel lblPIDValue;
+	JLabel lblEValue;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -19,8 +23,14 @@ public class Bloco {
 	 */
 	public Bloco(int tamanho){
 		this.tamanho=tamanho;
-		pbl++;
 		initialize();
+		pbl++;
+	}
+	public Processo getProc() {
+		return proc;
+	}
+	public void setProc(Processo proc) {
+		this.proc = proc;
 	}
 	public int getTamanho() {
 		return tamanho;
@@ -40,37 +50,50 @@ public class Bloco {
 	public void initialize(){
 		panel = new JPanel();
 		panel.setBackground(new Color(47, 79, 79));
-		panel.setPreferredSize(new Dimension(110, 52));
+		panel.setPreferredSize(new Dimension(129, 52));
 		panel.setLayout(null);
 		
 		JLabel lblBlocoId = new JLabel("BlocoID =");
 		lblBlocoId.setForeground(new Color(0, 255, 0));
-		lblBlocoId.setBounds(5, 2, 68, 15);
+		lblBlocoId.setBounds(5, 2, 56, 15);
 		panel.add(lblBlocoId);
 		
-		JLabel lblPIDValue = new JLabel(pbl+" ");
-		lblPIDValue.setForeground(new Color(0, 255, 0));
-		lblPIDValue.setBounds(72, 2, 46, 14);
-		panel.add(lblPIDValue);
+		JLabel lblBIDValue = new JLabel(pbl+" ");
+		lblBIDValue.setForeground(new Color(0, 255, 0));
+		lblBIDValue.setBounds(62, 2, 25, 14);
+		panel.add(lblBIDValue);
 		
-		JLabel lblTamTotal = new JLabel("Tam. Total =");
+		JLabel lblTamTotal = new JLabel("Espa\u00E7o =");
 		lblTamTotal.setForeground(new Color(0, 255, 0));
-		lblTamTotal.setBounds(5, 18, 68, 15);
+		lblTamTotal.setBounds(5, 33, 56, 15);
 		panel.add(lblTamTotal);
 		
-		JLabel lblTTValue = new JLabel(tamanho+" ");
-		lblTTValue.setForeground(Color.GREEN);
-		lblTTValue.setBounds(72, 18, 46, 14);
-		panel.add(lblTTValue);
 		
-		JLabel EspUsado = new JLabel("Esp. Usado = ");
-		EspUsado.setForeground(new Color(0, 255, 0));
-		EspUsado.setBounds(5, 33, 72, 14);
-		panel.add(EspUsado);
+		lblEValue = new JLabel(espacoUsado+" / "+tamanho);
+		lblEValue.setForeground(new Color(0, 255, 0));
+		lblEValue.setBounds(62, 33, 65, 14);
+		panel.add(lblEValue);
 		
-		JLabel lblEUValue = new JLabel(espacoUsado+" ");
-		lblEUValue.setForeground(new Color(0, 255, 0));
-		lblEUValue.setBounds(72, 33, 46, 14);
-		panel.add(lblEUValue);
+		JLabel lblPid = new JLabel("ProcID = ");
+		lblPid.setForeground(Color.GREEN);
+		lblPid.setBounds(5, 18, 56, 14);
+		panel.add(lblPid);
+		
+		if(proc==null){
+			lblPIDValue = new JLabel("livre");
+		}else{
+			lblPIDValue = new JLabel(proc.pId+"");
+		}
+		lblPIDValue.setForeground(new Color(0, 255, 0));
+		lblPIDValue.setBounds(62, 18, 46, 14);
+		panel.add(lblPIDValue);
 	}
+	public int getEspacoUsado() {
+		return espacoUsado;
+	}
+	public void setEspacoUsado(int espacoUsado) {
+		this.espacoUsado = espacoUsado;
+	}
+
+	
 }

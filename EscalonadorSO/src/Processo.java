@@ -1,7 +1,8 @@
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,7 +25,7 @@ public class Processo extends Thread {
 	JLabel lblDLineValue;
 	JLabel lblDLine;
 	private int memoria = r.nextInt(992)+32;
-
+	ArrayList<Bloco> blocoList = new ArrayList<Bloco>();
 	/**
 	 * Launch the application.
 	 */
@@ -36,6 +37,14 @@ public class Processo extends Thread {
 		escalonador = esc;
 		initialize();
 		pId++;
+	}
+
+	public int getMemoria() {
+		return memoria;
+	}
+
+	public void setMemoria(int memoria) {
+		this.memoria = memoria;
 	}
 
 	/**
@@ -116,26 +125,12 @@ public class Processo extends Thread {
 		panel.add(lblQuantumValue);
 
 		if (escalonador instanceof AlgoritmoRR) {
-			try {
-				deadline = -1;
-				lblQuantum.setVisible(true);
-				lblQuantumValue.setVisible(true);
-				lblQuantumValue.updateUI();
-				start();
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
-			
+			deadline = -1;
 		} else if (escalonador instanceof AlgoritmoLTG) {
-			try {
-				quantum = -1;
-				lblDLine.setVisible(true);
-				lblDLineValue.setVisible(true);
-				//start();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
+			quantum = -1;
+			lblDLine.setVisible(true);
+			lblDLineValue.setVisible(true);
+			start();
 		}
 	}
 
@@ -194,11 +189,9 @@ public class Processo extends Thread {
 
 	public void diminuirQuantum() {
 		this.quantum--;
-		
 		lblQuantumValue.setText(quantum+"s");
 		lblQuantumValue.revalidate();
 		lblQuantumValue.repaint();
-		lblQuantumValue.updateUI();
 	}
 
 	public void terminar(Core c) {
@@ -212,22 +205,16 @@ public class Processo extends Thread {
 
 	@Override
 	public void run() {
-		while ( deadline >= 0) {
+		
+		while ( deadline>=0 ) {
 			if (deadline > 0) {
 				diminuirDLine();
 				lblDLineValue.setText(deadline + "s");
 				escalonador.repintar();
 			} else {
-				try {
-					synchronized (this) {
-						diminuirDLine();
-						((AlgoritmoLTG) escalonador).dlineZero(this);
-					}
-					
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-				}
+				diminuirDLine();
+				((AlgoritmoLTG) escalonador).dlineZero(this);
+			}
 			try {
 				sleep(1000);
 			} catch (InterruptedException e) {

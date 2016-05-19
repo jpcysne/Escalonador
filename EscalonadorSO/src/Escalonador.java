@@ -208,7 +208,7 @@ public abstract class Escalonador {
 		pCores.repaint();
 		
 	}
-	public void removerCore(Core c){
+	public void repintarCore(Core c){
 		pCores.revalidate();
 		pCores.repaint();
 	}
@@ -229,7 +229,7 @@ public abstract class Escalonador {
 		pBlocos.repaint();
 	}
 	
-	public void addBloco(Bloco c){
-		pBlocos.add(c.getPanel());
+	public void addBloco(Bloco b){
+		pBlocos.add(b.getPanel());
 	}
 }

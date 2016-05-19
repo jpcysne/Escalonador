@@ -92,7 +92,7 @@ public class TelaConfigQF {
 						lblErro.setVisible(true);
 					else{
 						frame.dispose();
-						GerenciadorDeMemoria gm = new AlgoritmoMF(tam);
+						GerenciadorDeMemoria gm = new AlgoritmoQF(tam);
 						TelaConfigEscalonador tce = new TelaConfigEscalonador(gm);
 						tce.getFrame().setLocation(300, 7);
 						tce.getFrame().setVisible(true);

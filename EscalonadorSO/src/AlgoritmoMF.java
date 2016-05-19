@@ -7,13 +7,13 @@ public class AlgoritmoMF extends GerenciadorDeMemoria {
 	}
 
 	@Override
-	public void alocar() {
+	public Bloco alocar(Processo p) {
 		// TODO Auto-generated method stub
-
+		return null;
 	}
 
 	@Override
-	public void desalocar() {
+	public void desalocar(Processo p) {
 		// TODO Auto-generated method stub
 
 	}
