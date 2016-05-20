@@ -11,10 +11,12 @@ public class AlgoritmoRR extends Escalonador {
 	private int lastQ;
 	private int quantum;
 	GerenciadorDeMemoria gm;
-	public AlgoritmoRR(int qCores, int qProcIni, int Quantum, GerenciadorDeMemoria gm) {
+
+	public AlgoritmoRR(int qCores, int qProcIni, int Quantum,
+			GerenciadorDeMemoria gm) {
 		super();
-		quantum=Quantum;
-		this.gm=gm;
+		quantum = Quantum;
+		this.gm = gm;
 		for (int i = 0; i < qCores; i++) {
 			Core c = new Core();
 			cores.add(c);
@@ -76,75 +78,144 @@ public class AlgoritmoRR extends Escalonador {
 
 	@Override
 	public synchronized void escalonar() {
+
 		for (int i = 0; i < cores.size(); i++) {
 			if (!cores.get(i).haveProcess()) {
-				switch(lastQ){
-				case 0:
-					if (!aptos.isEmpty()) {
-					aptos.get(0).setQuantum(4*quantum);
-					aptos.get(0).lblQuantumValue.setText(aptos.get(0).getQuantum()+"s");
-					aptos.get(0).lblQuantumValue.setVisible(true);
-					aptos.get(0).lblQuantum.setVisible(true);
-					cores.get(i).setProcesso(aptos.get(0));
-					removeCores();
-					reAddCores();
-					aptos.remove(0);
-					lastQ=0;
-					break;
-					} 
-				case 1:
-					if (!aptos2.isEmpty()) {
-					aptos2.get(0).setQuantum(3*quantum);
-					aptos2.get(0).lblQuantumValue.setText(aptos2.get(0).getQuantum()+"s");
-					aptos2.get(0).lblQuantumValue.setVisible(true);
-					aptos2.get(0).lblQuantum.setVisible(true);
-					cores.get(i).setProcesso(aptos2.get(0));
-					removeCores();
-					reAddCores();
-					aptos2.remove(0);
-					lastQ=1;
-					break;
-					} 
-				case 2:
-					if (!aptos3.isEmpty()) {
-					aptos3.get(0).setQuantum(2*quantum);
-					aptos3.get(0).lblQuantumValue.setText(aptos3.get(0).getQuantum()+"s");
-					aptos3.get(0).lblQuantumValue.setVisible(true);
-					aptos3.get(0).lblQuantum.setVisible(true);
-					cores.get(i).setProcesso(aptos3.get(0));
-					removeCores();
-					reAddCores();
-					aptos3.remove(0);
-					lastQ=2;
-					break;
-					} 
-				case 3:
-					if (!aptos4.isEmpty()) {
-					aptos4.get(0).setQuantum(quantum);
-					aptos4.get(0).lblQuantumValue.setText(aptos4.get(0).getQuantum()+"s");
-					aptos4.get(0).lblQuantumValue.setVisible(true);
-					aptos4.get(0).lblQuantum.setVisible(true);
-					cores.get(i).setProcesso(aptos4.get(0));
-					removeCores();
-					reAddCores();
-					aptos4.remove(0);
-					lastQ=3;
-					break;
-					} 
+				boolean pare = false;
+				while (!pare
+						&& (!aptos.isEmpty() || !aptos2.isEmpty()
+								|| !aptos3.isEmpty() || !aptos4.isEmpty())) {
+					switch (lastQ) {
+					case 0:
+						if (!aptos.isEmpty()) {
+							if (!aptos.get(0).alocado) {
+								gm.alocar(aptos.get(0));
+							}
+							if (aptos.get(0).alocado) {
+								aptos.get(0).setQuantum(4 * quantum);
+								aptos.get(0).lblQuantumValue.setText(aptos.get(
+										0).getQuantum()
+										+ "s");
+								aptos.get(0).lblQuantumValue.setVisible(true);
+								aptos.get(0).lblQuantum.setVisible(true);
+								cores.get(i).setProcesso(aptos.get(0));
+								removeCores();
+								reAddCores();
+								repintar();
+								aptos.remove(0);
+								pare = true;
+								break;
+							} else {
+								aptos.get(0).abortar();
+								terminados.add(aptos.get(0));
+								removeAptos(aptos.get(0));
+								addTerminados(aptos.get(0));
+								aptos.remove(aptos.get(0));
+								repintar();
+								break;
+							}
+						}
+					case 1:
+						if (!aptos2.isEmpty()) {
+							if (!aptos2.get(0).alocado) {
+								gm.alocar(aptos2.get(0));
+							}
+							if (aptos2.get(0).alocado) {
+								aptos2.get(0).setQuantum(3 * quantum);
+								aptos2.get(0).lblQuantumValue.setText(aptos2
+										.get(0).getQuantum() + "s");
+								aptos2.get(0).lblQuantumValue.setVisible(true);
+								aptos2.get(0).lblQuantum.setVisible(true);
+								cores.get(i).setProcesso(aptos2.get(0));
+								removeCores();
+								reAddCores();
+								repintar();
+								aptos2.remove(0);
+
+								pare = true;
+								break;
+							} else {
+								aptos2.get(0).abortar();
+								terminados.add(aptos2.get(0));
+								removeAptos(aptos2.get(0));
+								addTerminados(aptos2.get(0));
+								aptos2.remove(aptos2.get(0));
+								repintar();
+								break;
+							}
+						}
+					case 2:
+						if (!aptos3.isEmpty()) {
+							if (!aptos3.get(0).alocado) {
+								gm.alocar(aptos3.get(0));
+							}
+							if (aptos3.get(0).alocado) {
+								aptos3.get(0).setQuantum(2 * quantum);
+								aptos3.get(0).lblQuantumValue.setText(aptos3
+										.get(0).getQuantum() + "s");
+								aptos3.get(0).lblQuantumValue.setVisible(true);
+								aptos3.get(0).lblQuantum.setVisible(true);
+								cores.get(i).setProcesso(aptos3.get(0));
+								removeCores();
+								reAddCores();
+								repintar();
+								aptos3.remove(0);
+
+								pare = true;
+								break;
+							} else {
+								aptos3.get(0).abortar();
+								terminados.add(aptos3.get(0));
+								removeAptos(aptos3.get(0));
+								addTerminados(aptos3.get(0));
+								aptos3.remove(aptos3.get(0));
+								repintar();
+								break;
+							}
+						}
+					case 3:
+						if (!aptos4.isEmpty()) {
+							if (!aptos4.get(0).alocado) {
+								gm.alocar(aptos4.get(0));
+							}
+							if (aptos4.get(0).alocado) {
+								aptos4.get(0).setQuantum(quantum);
+								aptos4.get(0).lblQuantumValue.setText(aptos4
+										.get(0).getQuantum() + "s");
+								aptos4.get(0).lblQuantumValue.setVisible(true);
+								aptos4.get(0).lblQuantum.setVisible(true);
+								cores.get(i).setProcesso(aptos4.get(0));
+								removeCores();
+								reAddCores();
+								repintar();
+								aptos4.remove(0);
+								pare = true;
+								break;
+							} else {
+								aptos4.get(0).abortar();
+								terminados.add(aptos4.get(0));
+								removeAptos(aptos4.get(0));
+								addTerminados(aptos4.get(0));
+								aptos4.remove(aptos4.get(0));
+								repintar();
+								break;
+							}
+						}
+					}
+
+					lastQ++;
+					if (lastQ >= 4) {
+						lastQ = 0;
+					}
 				}
-				lastQ++;
-				if(lastQ==4){
-					lastQ=0;
-				}
-			}			
 			}
 		}
-	
-		private void reAddCores() {
-			for (Core c : cores) {
-				addCores(c);
-			}
+	}
 
+	private void reAddCores() {
+		for (Core c : cores) {
+			addCores(c);
+		}
 
 	}
 
@@ -153,6 +224,8 @@ public class AlgoritmoRR extends Escalonador {
 		terminados.add(c.getProcesso());
 		addTerminados(c.getProcesso());
 		repintarCore(c);
+		gm.desalocar(c.getProcesso());
+		repintar();
 		escalonar();
 	}
 
@@ -161,6 +234,7 @@ public class AlgoritmoRR extends Escalonador {
 		addAptos(c.getProcesso());
 		c.removerProcesso();
 		repintarCore(c);
+		repintar();
 		escalonar();
 	}
 

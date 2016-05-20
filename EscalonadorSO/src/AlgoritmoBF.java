@@ -13,6 +13,7 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 			for (Bloco b : blistlivre) {
 				if(b.getTamanho()==p.getMemoria()){
 				b.setProc(p);
+				p.alocado=true;
 				b.setEspacoUsado(p.getMemoria());
 				blistlivre.remove(b);
 				blistusado.add(b);
@@ -33,6 +34,7 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 					esc=p.escalonador;
 					blist.add(bl);
 					bl.setProc(p);
+					p.alocado=true;
 					bl.setEspacoUsado(p.getMemoria());
 					blistusado.add(bl);
 					memoriaUsada+=bl.getTamanho();
@@ -50,6 +52,7 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 			for (Bloco b : blistlivre) {
 				if(b.getTamanho()==p.getMemoria()){
 					b.setProc(p);
+					p.alocado=true;
 					b.setEspacoUsado(p.getMemoria());
 					blistlivre.remove(b);
 					blistusado.add(b);
@@ -63,6 +66,7 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 				}
 			}
 			melhor.setProc(p);
+			p.alocado=true;
 			melhor.setEspacoUsado(p.getMemoria());
 			blistlivre.remove(melhor);
 			blistusado.add(melhor);
@@ -77,6 +81,7 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 				esc=p.escalonador;
 				blist.add(bl);
 				bl.setProc(p);
+				p.alocado=true;
 				bl.setEspacoUsado(p.getMemoria());
 				blistusado.add(bl);
 				p.blocoList.add(bl);
@@ -94,6 +99,7 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 		//checa na lista de blocos usados todos que o processo é o que vai ser desalocado;
 		for(Bloco b: p.blocoList){
 				b.setProc(null);
+				p.alocado=false;
 				b.setEspacoUsado(0);
 				blistusado.remove(b);
 				blistlivre.add(b);
@@ -105,12 +111,10 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 		if(b.getProc()==null){
 			b.lblPIDValue.setText("livre");
 		}else{
-			
-		b.lblPIDValue.setText(b.getProc().pId+"");
+		b.lblPIDValue.setText(b.getProc().pId-1+"");
 		}
 		b.lblEValue.setText(b.getEspacoUsado()+" / "+b.getTamanho());
 		b.getPanel().revalidate();
 		b.getPanel().repaint();
-		
 	}
 }

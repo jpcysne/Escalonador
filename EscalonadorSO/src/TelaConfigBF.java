@@ -58,29 +58,29 @@ public class TelaConfigBF {
 		lblFit.setForeground(new Color(0, 128, 0));
 		lblFit.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblFit.setBackground(new Color(139, 0, 0));
-		lblFit.setBounds(405, 254, 75, 25);
+		lblFit.setBounds(383, 257, 75, 25);
 		frame.getContentPane().add(lblFit);
 
 		JLabel lblTamanhoDaMemoria = new JLabel("Tamanho da Memoria:");
 		lblTamanhoDaMemoria.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblTamanhoDaMemoria.setForeground(new Color(0, 128, 0));
-		lblTamanhoDaMemoria.setBounds(280, 315, 135, 25);
+		lblTamanhoDaMemoria.setBounds(243, 318, 135, 25);
 		frame.getContentPane().add(lblTamanhoDaMemoria);
 
 		tfTam = new JTextField("");
-		tfTam.setBounds(420, 320, 40, 20);
+		tfTam.setBounds(383, 323, 70, 20);
 		frame.getContentPane().add(tfTam);
 		tfTam.setColumns(10);
 
 		JLabel lblErro = new JLabel("Por favor, insira um valor maior que 0");
 		lblErro.setForeground(new Color(255, 0, 0));
-		lblErro.setBounds(470, 322, 250, 15);
+		lblErro.setBounds(468, 324, 250, 15);
 		lblErro.setVisible(false);
 		frame.getContentPane().add(lblErro);
 
 		JLabel lblErro3 = new JLabel("Por favor, insira valores nos campos");
 		lblErro3.setForeground(new Color(255, 0, 0));
-		lblErro3.setBounds(350, 290, 250, 15);
+		lblErro3.setBounds(339, 293, 250, 15);
 		lblErro3.setVisible(false);
 		frame.getContentPane().add(lblErro3);
 		JButton btnIniciar = new JButton("Iniciar");
@@ -103,7 +103,7 @@ public class TelaConfigBF {
 
 			}
 		});
-		btnIniciar.setBounds(405, 358, 70, 25);
+		btnIniciar.setBounds(383, 354, 70, 25);
 		frame.getContentPane().add(btnIniciar);
 	}
 

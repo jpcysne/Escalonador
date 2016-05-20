@@ -2,7 +2,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -26,6 +25,7 @@ public class Processo extends Thread {
 	JLabel lblDLine;
 	private int memoria = r.nextInt(992)+32;
 	ArrayList<Bloco> blocoList = new ArrayList<Bloco>();
+	boolean alocado=false;
 	/**
 	 * Launch the application.
 	 */
@@ -205,7 +205,6 @@ public class Processo extends Thread {
 
 	@Override
 	public void run() {
-		
 		while ( deadline>=0 ) {
 			if (deadline > 0) {
 				diminuirDLine();

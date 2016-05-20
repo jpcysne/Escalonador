@@ -82,7 +82,7 @@ public class Bloco {
 		if(proc==null){
 			lblPIDValue = new JLabel("livre");
 		}else{
-			lblPIDValue = new JLabel(proc.pId+"");
+			lblPIDValue = new JLabel(proc.pId-1+"");
 		}
 		lblPIDValue.setForeground(new Color(0, 255, 0));
 		lblPIDValue.setBounds(62, 18, 46, 14);

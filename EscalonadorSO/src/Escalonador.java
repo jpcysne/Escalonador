@@ -139,7 +139,8 @@ public abstract class Escalonador {
 		jsBlocos = new JScrollPane(pBlocos);
 		jsBlocos.setBounds(15, 445, 720, 80);
 		frame.getContentPane().add(jsBlocos);
-		
+		frame.setLocation(300,7);
+		frame.setVisible(true);
 		t = new Thread(){
 			public void run() {
 				while(true){
