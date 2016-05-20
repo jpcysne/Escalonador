@@ -1,10 +1,14 @@
-import java.util.ArrayList;		
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;		
   		  
   public class AlgoritmoQF extends GerenciadorDeMemoria {		 
 	  
   		  
  	private ArrayList<Bloco> maisChamados = new ArrayList<Bloco>();
- 	private ArrayList<Integer> tamanhoProcessos = new ArrayList<Integer>();
+ 	private ArrayList<Processo> pro = new ArrayList<Processo>();
+ 	private HashMap<Processo, Integer> listaQF = new HashMap<Processo, Integer>();
  	private static int numRequisisao = 0;
  	private int frequenciaProcesso;
  			
@@ -24,9 +28,9 @@ import java.util.ArrayList;
  					blistusado.add(b);		
  					p.blocoList.add(b);		
  					atualizarLabels(b);
- 					tamanhoProcessos.add(p.getMemoria());
- 					maisChamados.add(b);
- 					NumRequisisoes();
+ 					listaQF.put(p, p.getMemoria());
+ 					pro.add(p);
+ 					NumRequisisoes(listaQF,pro);
  					return b;		
  					}
  				
@@ -45,9 +49,9 @@ import java.util.ArrayList;
  					memoriaUsada+=bl.getTamanho();		
  					esc.addBloco(bl);		
  					atualizarLabels(bl);
- 					tamanhoProcessos.add(p.getMemoria());
- 					maisChamados.add(bl);
- 					NumRequisisoes();
+ 					listaQF.put(p, p.getMemoria());
+ 					pro.add(p);
+ 					NumRequisisoes(listaQF,pro);
  					return bl;		
  				}		
  		}		
@@ -69,11 +73,22 @@ import java.util.ArrayList;
   		  
   	}	
   	
-  	public void NumRequisisoes(){
+  	public void NumRequisisoes(HashMap<Processo, Integer> listaQF2, ArrayList<Processo> pro2){
   		numRequisisao = numRequisisao + 1;
   		
   		if(numRequisisao == 20){
   			numRequisisao = 0;
+  			AumentoFrequencia(listaQF2);
+  		}
+  	}
+  	
+  	public void AumentoFrequencia(HashMap<Processo, Integer> listaQF2){
+  		
+  		
+  		for(Entry<Processo, Integer> valor : listaQF2.entrySet()){
+  			if(listaQF2.get){
+  				
+  			}
   			
   		}
   	}
