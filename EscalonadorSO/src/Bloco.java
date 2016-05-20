@@ -37,6 +37,8 @@ public class Bloco {
 	}
 	public void setTamanho(int tamanho) {
 		this.tamanho = tamanho;
+		lblEValue.setText(espacoUsado+" / "+tamanho);
+		
 	}
 	public JPanel getPanel() {
 		return panel;

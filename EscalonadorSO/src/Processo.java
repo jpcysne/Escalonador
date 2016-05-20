@@ -16,6 +16,7 @@ public class Processo extends Thread {
 	private int quantum = -1;
 	private int deadline = r.nextInt(17) + 4;
 	static int pId = 0;
+	int id;
 	JLabel lblTempoRest;
 	JLabel lblTempoRestValue;
 	Escalonador escalonador;
@@ -35,6 +36,7 @@ public class Processo extends Thread {
 	 */
 	public Processo(Escalonador esc) {
 		escalonador = esc;
+		id=pId;
 		initialize();
 		pId++;
 	}

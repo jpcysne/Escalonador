@@ -111,7 +111,7 @@ public class AlgoritmoBF extends GerenciadorDeMemoria {
 		if(b.getProc()==null){
 			b.lblPIDValue.setText("livre");
 		}else{
-		b.lblPIDValue.setText(b.getProc().pId-1+"");
+		b.lblPIDValue.setText(b.getProc().id+"");
 		}
 		b.lblEValue.setText(b.getEspacoUsado()+" / "+b.getTamanho());
 		b.getPanel().revalidate();

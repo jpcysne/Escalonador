@@ -48,6 +48,7 @@ public abstract class Escalonador {
 	 */
 	public Escalonador() {
 		initialize();
+		
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -232,5 +233,14 @@ public abstract class Escalonador {
 	
 	public void addBloco(Bloco b){
 		pBlocos.add(b.getPanel());
+	}
+	public void addBloco(Bloco b, int pos){
+		pBlocos.add(b.getPanel(),pos);
+	}
+	public JPanel getpBlocos() {
+		return pBlocos;
+	}
+	public void setpBlocos(JPanel pBlocos) {
+		this.pBlocos = pBlocos;
 	}
 }

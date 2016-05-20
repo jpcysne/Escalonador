@@ -10,6 +10,7 @@ public class AlgoritmoLTG extends Escalonador {
 	public AlgoritmoLTG(int qCores, int qProcIni, GerenciadorDeMemoria gm) {
 		super();
 		this.gm = gm;
+		this.gm.esc=this;
 		for (int i = 0; i < qCores; i++) {
 			Core c = new Core();
 			cores.add(c);

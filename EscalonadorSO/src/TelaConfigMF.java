@@ -58,7 +58,7 @@ public class TelaConfigMF {
 		lblFit.setForeground(new Color(0, 128, 0));
 		lblFit.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblFit.setBackground(new Color(139, 0, 0));
-		lblFit.setBounds(405, 254, 75, 25);
+		lblFit.setBounds(383, 254, 75, 25);
 		frame.getContentPane().add(lblFit);
 
 		JLabel lblTamanhoDaMemoria = new JLabel("Tamanho da Memoria:");
@@ -103,7 +103,7 @@ public class TelaConfigMF {
 
 			}
 		});
-		btnIniciar.setBounds(405, 358, 70, 25);
+		btnIniciar.setBounds(383, 354, 70, 25);
 		frame.getContentPane().add(btnIniciar);
 	}
 

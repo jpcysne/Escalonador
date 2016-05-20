@@ -17,6 +17,7 @@ public class AlgoritmoRR extends Escalonador {
 		super();
 		quantum = Quantum;
 		this.gm = gm;
+		this.gm.esc=this;
 		for (int i = 0; i < qCores; i++) {
 			Core c = new Core();
 			cores.add(c);
