@@ -82,7 +82,7 @@ public class AlgoritmoQF extends GerenciadorDeMemoria {
 
 	public void AddMap(int tamanho){
 		if(listaQF.isEmpty()){
-			listaQF.put(1,tamanho);
+			listaQF.put(tamanho,1);
 		}else{
 			boolean achou=false;
 			for(Entry<Integer, Integer> valor : listaQF.entrySet()){
@@ -93,7 +93,7 @@ public class AlgoritmoQF extends GerenciadorDeMemoria {
 
 			}
 			if(!achou){
-				listaQF.put(1,tamanho);
+				listaQF.put(tamanho,1);
 			}
 		}
 
@@ -101,32 +101,27 @@ public class AlgoritmoQF extends GerenciadorDeMemoria {
 
 
 	public void Maiores() {
-		
-		int[] maiores = new int[3];
-
+		HashMap<Integer, ArrayList<Bloco>> maiores = new HashMap<Integer,ArrayList<Bloco>>(); 
+		int[] tamanhos = new int[3];
+		int i = 0;
 		HashMap<Integer, Integer> map =
-                listaQF.entrySet().stream()
-                        .sorted(Map.Entry.comparingByValue())
-                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                                (e1, e2) -> e1, LinkedHashMap::new));
+				listaQF.entrySet().stream()
+				.sorted(Map.Entry.comparingByValue())
+				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+						(e1, e2) -> e1, LinkedHashMap::new));
 
-		/*TreeMap<Integer, Integer> map2 = new TreeMap<Integer, Integer>(new Comparacao(listaQF).reversed());
-		map2.putAll(listaQF);*/
-		for(int i = 0; i <4 ; i++){
-		for (Entry<Integer, Integer> valor : map.entrySet()) {
-			maiores[i] = valor.getKey();
-			i++;
-			
-		}
-		}
+		/*TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>(new Comparacao(listaQF).reversed());
+		map.putAll(listaQF);*/
+		for(Entry<Integer, Integer> valor : map.entrySet()){
+		     tamanhos[i]=valor.getKey();
+		     i++;
+		     if(i==4)
+		      break;
+		    }
 
-		for(Bloco b : blist){
-			for(int t = 0; t<4;t++){
-				if(blist.contains(maiores[t])){
-					hashQF.put(blist,((Entry<Integer,Integer>) map).getKey());
-				}
-			}
-		}	
+		for(int j = 0; j<4;j++){
+		      maiores.put(map.get(tamanhos[j]), new ArrayList<Bloco>());
+		     }	
 	}
 
 	@Override		  	
