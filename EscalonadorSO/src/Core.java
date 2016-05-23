@@ -69,7 +69,7 @@ public class Core extends Thread {
 			if (processo != null) {
 				if (processo.getTempoRest() > 0) {
 					processo.diminuirTRest();
-
+					processo.novaRequisicao();
 				} else {
 					terminarProcesso();
 

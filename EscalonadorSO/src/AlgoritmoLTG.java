@@ -5,7 +5,7 @@ public class AlgoritmoLTG extends Escalonador {
 	ArrayList<Processo> aptos = new ArrayList<Processo>();
 	ArrayList<Processo> terminados = new ArrayList<Processo>();
 	ArrayList<Core> cores = new ArrayList<Core>();
-	GerenciadorDeMemoria gm;
+	
 
 	public AlgoritmoLTG(int qCores, int qProcIni, GerenciadorDeMemoria gm) {
 		super();
@@ -77,22 +77,15 @@ public class AlgoritmoLTG extends Escalonador {
 		for (int i = 0; i < cores.size(); i++) {
 			if (!cores.get(i).haveProcess()) {
 				if (!aptos.isEmpty()) {
-					Bloco b = gm.alocar(aptos.get(0));
-					if (b != null) {
+					Bloco b=gm.alocar(aptos.get(0), aptos.get(0).getMemoria());
+					if (b!=null) {
 						cores.get(i).setProcesso(aptos.get(0));
 						removeCores();
 						reAddCores();
-						// readdCores();
 						aptos.remove(0);
 						repintar();
 					} else {
-						aptos.get(0).abortar();
-						terminados.add(aptos.get(0));
-						removeAptos(aptos.get(0));
-						addTerminados(aptos.get(0));
-						
-						aptos.remove(aptos.get(0));
-						repintar();
+						abortarMemoria(aptos.get(0));
 					}
 				}else{
 					break;
@@ -121,8 +114,8 @@ public class AlgoritmoLTG extends Escalonador {
 			if (c.getProcesso().equals(p)) {
 				terminados.add(c.getProcesso());
 				addTerminados(c.getProcesso());
-				c.removerProcesso();
 				gm.desalocar(c.getProcesso());
+				c.removerProcesso();
 				repintar();
 				escalonar();
 				break;
@@ -135,6 +128,15 @@ public class AlgoritmoLTG extends Escalonador {
 		terminados.add(p);
 		removeAptos(p);
 		addTerminados(p);
+		aptos.remove(p);
+		repintar();
+	}
+	public void abortarMemoria(Processo p){
+		p.abortarMemoria();
+		terminados.add(p);
+		removeAptos(p);
+		addTerminados(p);
+		
 		aptos.remove(p);
 		repintar();
 	}

@@ -19,4 +19,16 @@ public class AlgoritimoIB extends Escalonador{
 		
 	}
 
+	@Override
+	public void abortarMemoria(Processo p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void abortarEscalonado(Processo p) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

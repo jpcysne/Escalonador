@@ -27,6 +27,7 @@ public abstract class Escalonador {
 	private JScrollPane jsBlocos;
 	private JPanel pBlocos;
 	Thread t;
+	GerenciadorDeMemoria gm;
 	/**
 	 * Launch the application.
 	 */
@@ -240,7 +241,9 @@ public abstract class Escalonador {
 	public JPanel getpBlocos() {
 		return pBlocos;
 	}
+	public abstract void abortarMemoria(Processo p);
 	public void setpBlocos(JPanel pBlocos) {
 		this.pBlocos = pBlocos;
 	}
+	public abstract void abortarEscalonado(Processo p);
 }

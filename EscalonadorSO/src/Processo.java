@@ -26,6 +26,7 @@ public class Processo extends Thread {
 	JLabel lblDLine;
 	private int memoria = r.nextInt(992)+32;
 	ArrayList<Bloco> blocoList = new ArrayList<Bloco>();
+	boolean correr=true;
 	boolean alocado=false;
 	/**
 	 * Launch the application.
@@ -204,10 +205,15 @@ public class Processo extends Thread {
 	public void abortar() {
 		panel.setBackground(Color.GRAY);
 	}
+	
+	public void abortarMemoria() {
+		panel.setBackground(Color.DARK_GRAY);
+		correr=false;
+	}
 
 	@Override
 	public void run() {
-		while ( deadline>=0 ) {
+		while ( deadline>=0 && correr) {
 			if (deadline > 0) {
 				diminuirDLine();
 				lblDLineValue.setText(deadline + "s");
@@ -246,5 +252,19 @@ public class Processo extends Thread {
 	}
 	public void quantumZero(Core c){
 		((AlgoritmoRR) escalonador).quantumZero(c);
+	}
+	
+	public void novaRequisicao(){
+		int p = r.nextInt(21)+1;
+		if(p==1||p==21){
+			int requisicao=r.nextInt(992)+32;
+			Bloco b=escalonador.gm.alocar(this,requisicao);
+			if(b!=null)
+				blocoList.add(b);
+			else{
+			escalonador.abortarMemoria(this);
+			escalonador.abortarEscalonado(this);
+			}
+		}
 	}
 }

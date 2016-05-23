@@ -10,7 +10,6 @@ public class AlgoritmoRR extends Escalonador {
 	ArrayList<Core> cores = new ArrayList<Core>();
 	private int lastQ;
 	private int quantum;
-	GerenciadorDeMemoria gm;
 
 	public AlgoritmoRR(int qCores, int qProcIni, int Quantum,
 			GerenciadorDeMemoria gm) {
@@ -90,7 +89,7 @@ public class AlgoritmoRR extends Escalonador {
 					case 0:
 						if (!aptos.isEmpty()) {
 							if (!aptos.get(0).alocado) {
-								gm.alocar(aptos.get(0));
+								gm.alocar(aptos.get(0),aptos.get(0).getMemoria());
 							}
 							if (aptos.get(0).alocado) {
 								aptos.get(0).setQuantum(4 * quantum);
@@ -107,19 +106,14 @@ public class AlgoritmoRR extends Escalonador {
 								pare = true;
 								break;
 							} else {
-								aptos.get(0).abortar();
-								terminados.add(aptos.get(0));
-								removeAptos(aptos.get(0));
-								addTerminados(aptos.get(0));
-								aptos.remove(aptos.get(0));
-								repintar();
+								abortarMemoria(aptos.get(0));
 								break;
 							}
 						}
 					case 1:
 						if (!aptos2.isEmpty()) {
 							if (!aptos2.get(0).alocado) {
-								gm.alocar(aptos2.get(0));
+								gm.alocar(aptos2.get(0),aptos2.get(0).getMemoria());
 							}
 							if (aptos2.get(0).alocado) {
 								aptos2.get(0).setQuantum(3 * quantum);
@@ -136,19 +130,14 @@ public class AlgoritmoRR extends Escalonador {
 								pare = true;
 								break;
 							} else {
-								aptos2.get(0).abortar();
-								terminados.add(aptos2.get(0));
-								removeAptos(aptos2.get(0));
-								addTerminados(aptos2.get(0));
-								aptos2.remove(aptos2.get(0));
-								repintar();
+								abortarMemoria(aptos2.get(0));
 								break;
 							}
 						}
 					case 2:
 						if (!aptos3.isEmpty()) {
 							if (!aptos3.get(0).alocado) {
-								gm.alocar(aptos3.get(0));
+								gm.alocar(aptos3.get(0),aptos3.get(0).getMemoria());
 							}
 							if (aptos3.get(0).alocado) {
 								aptos3.get(0).setQuantum(2 * quantum);
@@ -165,19 +154,14 @@ public class AlgoritmoRR extends Escalonador {
 								pare = true;
 								break;
 							} else {
-								aptos3.get(0).abortar();
-								terminados.add(aptos3.get(0));
-								removeAptos(aptos3.get(0));
-								addTerminados(aptos3.get(0));
-								aptos3.remove(aptos3.get(0));
-								repintar();
+								abortarMemoria(aptos3.get(0));
 								break;
 							}
 						}
 					case 3:
 						if (!aptos4.isEmpty()) {
 							if (!aptos4.get(0).alocado) {
-								gm.alocar(aptos4.get(0));
+								gm.alocar(aptos4.get(0),aptos4.get(0).getMemoria());
 							}
 							if (aptos4.get(0).alocado) {
 								aptos4.get(0).setQuantum(quantum);
@@ -193,12 +177,7 @@ public class AlgoritmoRR extends Escalonador {
 								pare = true;
 								break;
 							} else {
-								aptos4.get(0).abortar();
-								terminados.add(aptos4.get(0));
-								removeAptos(aptos4.get(0));
-								addTerminados(aptos4.get(0));
-								aptos4.remove(aptos4.get(0));
-								repintar();
+								abortarMemoria(aptos4.get(0));
 								break;
 							}
 						}
@@ -238,5 +217,26 @@ public class AlgoritmoRR extends Escalonador {
 		repintar();
 		escalonar();
 	}
-
+	public void abortarMemoria(Processo p){
+		p.abortarMemoria();
+		terminados.add(p);
+		removeAptos(p);
+		addTerminados(p);
+		aptos.remove(p);
+		repintar();
+	}
+	public void abortarEscalonado(Processo p) {
+		for (Core c : cores) {
+			if(c.getProcesso()!=null)
+			if (c.getProcesso().equals(p)) {
+				terminados.add(c.getProcesso());
+				addTerminados(c.getProcesso());
+				gm.desalocar(c.getProcesso());
+				c.removerProcesso();
+				repintar();
+				escalonar();
+				break;
+			}
+		}
+	}
 }
