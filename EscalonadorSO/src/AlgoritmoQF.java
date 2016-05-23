@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Vector;
 import java.util.Map.Entry;
 import java.util.TreeMap;		
-  		  
+
 public class AlgoritmoQF extends GerenciadorDeMemoria {		 
 
 
@@ -67,18 +67,7 @@ public class AlgoritmoQF extends GerenciadorDeMemoria {
 		return null;
 	}
 
-	@Override		  	
-	public void desalocar(Processo p) {		  	 		
-		for(Bloco b: p.blocoList){		 
-			b.setProc(null);		
-			b.setEspacoUsado(0);		
-			blistusado.remove(b);		
-			blistlivre.add(b);		
-			atualizarLabels(b);		
-		}		
-		p.blocoList.clear();		
 
-	}	
 
 	public void NumRequisisoes(int tamanho){
 		numRequisisao = numRequisisao + 1;
@@ -108,7 +97,8 @@ public class AlgoritmoQF extends GerenciadorDeMemoria {
 
 	}
 
-	public int[] Maiores() {
+
+	public void Maiores() {
 		int i = 0;
 		int[] maiores = new int[3];
 		Map<Integer, Integer> map = new TreeMap<Integer, Integer>(listaQF);
@@ -120,7 +110,27 @@ public class AlgoritmoQF extends GerenciadorDeMemoria {
 				break;
 			}
 		}
-		return maiores;
+
+		for(Bloco b : blist){
+			for(int t = 0; t<4;t++){
+				if(blist.contains(maiores[t])){
+					hashQF.put(blist,maiores[t]);
+				}
+			}
+		}	
+	}
+
+	@Override		  	
+	public void desalocar(Processo p) {		  	 		
+		for(Bloco b: p.blocoList){		 
+			b.setProc(null);		
+			b.setEspacoUsado(0);		
+			blistusado.remove(b);		
+			blistlivre.add(b);		
+			atualizarLabels(b);		
+		}		
+		p.blocoList.clear();		
+
 	}
 
 	public void atualizarLabels(Bloco b){		
