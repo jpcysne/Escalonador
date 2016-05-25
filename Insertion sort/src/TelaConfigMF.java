@@ -14,14 +14,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class TelaConfigQF {
+public class TelaConfigMF {
 
 	private JFrame frame;
 	private JTextField tfTam;
 	private int tam;
-	private JTextField tfQntL;
-	private JTextField tfQntR;
-	int qntL,qntR;
 
 	/**
 	 * Launch the application.
@@ -30,7 +27,7 @@ public class TelaConfigQF {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaConfigQF window = new TelaConfigQF();
+					TelaConfigMF window = new TelaConfigMF();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +39,7 @@ public class TelaConfigQF {
 	/**
 	 * Create the application.
 	 */
-	public TelaConfigQF() {
+	public TelaConfigMF() {
 		initialize();
 	}
 
@@ -57,11 +54,11 @@ public class TelaConfigQF {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		JLabel lblFit = new JLabel("Quick Fit");
+		JLabel lblFit = new JLabel("Merge Fit");
 		lblFit.setForeground(new Color(0, 128, 0));
 		lblFit.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblFit.setBackground(new Color(139, 0, 0));
-		lblFit.setBounds(383, 251, 75, 25);
+		lblFit.setBounds(383, 254, 75, 25);
 		frame.getContentPane().add(lblFit);
 
 		JLabel lblTamanhoDaMemoria = new JLabel("Tamanho da Memoria:");
@@ -91,13 +88,11 @@ public class TelaConfigQF {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					tam = Integer.parseInt(tfTam.getText());
-					qntL= Integer.parseInt(tfQntL.getText());
-					qntR= Integer.parseInt(tfQntR.getText());
 					if(tam<=0)
 						lblErro.setVisible(true);
 					else{
 						frame.dispose();
-						GerenciadorDeMemoria gm = new AlgoritmoQF(tam, qntL, qntR);
+						GerenciadorDeMemoria gm = new AlgoritmoMF(tam);
 						TelaConfigEscalonador tce = new TelaConfigEscalonador(gm);
 						tce.getFrame().setLocation(300, 7);
 						tce.getFrame().setVisible(true);
@@ -108,30 +103,8 @@ public class TelaConfigQF {
 
 			}
 		});
-		btnIniciar.setBounds(383, 424, 70, 25);
+		btnIniciar.setBounds(383, 354, 70, 25);
 		frame.getContentPane().add(btnIniciar);
-		
-		JLabel lblQuantidadeDeListas = new JLabel("Quantidade de Listas:");
-		lblQuantidadeDeListas.setForeground(new Color(0, 128, 0));
-		lblQuantidadeDeListas.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblQuantidadeDeListas.setBounds(243, 354, 118, 25);
-		frame.getContentPane().add(lblQuantidadeDeListas);
-		
-		JLabel lblQuantidadeDeRequisies = new JLabel("Quantidade de Requisi\u00E7\u00F5es:");
-		lblQuantidadeDeRequisies.setForeground(new Color(0, 128, 0));
-		lblQuantidadeDeRequisies.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblQuantidadeDeRequisies.setBounds(210, 390, 151, 25);
-		frame.getContentPane().add(lblQuantidadeDeRequisies);
-		
-		tfQntL = new JTextField("");
-		tfQntL.setColumns(10);
-		tfQntL.setBounds(383, 357, 70, 20);
-		frame.getContentPane().add(tfQntL);
-		
-		tfQntR = new JTextField("");
-		tfQntR.setColumns(10);
-		tfQntR.setBounds(383, 393, 70, 20);
-		frame.getContentPane().add(tfQntR);
 	}
 
 	public JFrame getFrame() {
