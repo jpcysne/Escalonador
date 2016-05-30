@@ -121,9 +121,20 @@ public class TelaConfigLTG {
 						lblErro2.setVisible(true);
 					} else {
 						frame.dispose();
-						Escalonador esc = new AlgoritmoLTG(qntCores, qntProc,gm);
-						esc.getFrame().setLocation(300, 7);
-						esc.getFrame().setVisible(true);
+						
+						
+						//javax.swing.SwingUtilities.invokeLater(new Runnable() {
+							
+							
+						// void run() {
+							
+								Escalonador esc = new AlgoritmoLTG(qntCores, qntProc,gm);
+								esc.getFrame().setLocation(300, 7);
+								esc.getFrame().setVisible(true);
+								
+						//	}
+					//	});
+						
 					}
 				} catch (Exception e1) {
 					lblErro3.setVisible(true);

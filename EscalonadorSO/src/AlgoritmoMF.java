@@ -14,7 +14,6 @@ public class AlgoritmoMF extends GerenciadorDeMemoria {
 
 	@Override
 	public Bloco alocar(Processo p, int requisicao) {
-		
 		if (primeiro && super.tamanhoMemoria >= p.getMemoria()) {
 			primeiro = false;
 			Bloco b = new Bloco(tamanhoMemoria); 

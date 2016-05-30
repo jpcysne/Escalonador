@@ -32,19 +32,20 @@ public abstract class Escalonador {
 	/**
 	 * Launch the application.
 	 */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// public void run() {
-	// try {
-	// Escalonador window = new Escalonador();
-	// window.frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
-
+		/*
+	 public static void main(String[] args) {
+	 EventQueue.invokeLater(new Runnable() {
+	 public void run() {
+	 try {
+	 Escalonador window = new Escalonador();
+	 window.frame.setVisible(true);
+	 } catch (Exception e) {
+	 e.printStackTrace();
+	 }
+	 }
+	 });
+	 }
+	*/
 	/**
 	 * Create the application.
 	 */
@@ -199,7 +200,11 @@ public abstract class Escalonador {
 		pAptos.add(p.getPanel());
 		pAptos.revalidate();
 		pAptos.repaint();
-
+	}
+	public void addAptos(Processo p, int pos) {
+		pAptos.add(p.getPanel(), pos);
+		pAptos.revalidate();
+		pAptos.repaint();
 	}
 
 	public void addCores(Core c) {
@@ -215,11 +220,7 @@ public abstract class Escalonador {
 
 	}
 
-	public void removeAptos(int index) {
-		pAptos.remove(index);
-		pAptos.revalidate();
-		pAptos.repaint();
-	}
+	
 
 	public void removeAptos(Processo p) {
 		pAptos.remove(p.getPanel());
@@ -227,20 +228,9 @@ public abstract class Escalonador {
 		pAptos.repaint();
 	}
 
-	public void removeCores() {
-		pCores.removeAll();
-	}
-
-	public void removerAptos() {
-		pAptos.removeAll();
-	}
 	
-	public void readdCores() {
-		pCores.add(pAptos.getComponent(0));
-		pCores.revalidate();
-		pCores.repaint();
-		
-	}
+
+	
 	public void repintarCore(Core c){
 		pCores.revalidate();
 		pCores.repaint();
@@ -271,10 +261,11 @@ public abstract class Escalonador {
 	public JPanel getpBlocos() {
 		return pBlocos;
 	}
-	public abstract void abortarMemoria(Processo p);
+
 	public void setpBlocos(JPanel pBlocos) {
 		this.pBlocos = pBlocos;
 	}
+	public abstract void abortarMemoria(Processo p);
 	public abstract void abortarEscalonado(Processo p);
 	public void addTam(int tam){
 		JPanel patam = new JPanel();
@@ -292,5 +283,8 @@ public abstract class Escalonador {
 		pTam.removeAll();
 		pTam.revalidate();
 		pTam.repaint();
+	}
+	public void removerAptos(){
+		pAptos.removeAll();
 	}
 }

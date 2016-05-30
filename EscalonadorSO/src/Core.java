@@ -9,7 +9,7 @@ public class Core extends Thread {
 	boolean correr=true;
 	public Core() {
 		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(110, 52));
+		panel.setPreferredSize(new Dimension(110, 58));
 		panel.setBackground(Color.DARK_GRAY);
 		start();
 	}
@@ -19,24 +19,21 @@ public class Core extends Thread {
 		p.setDeadline(-1);
 		p.getLblDLine().setVisible(false);
 		p.getLblDLineValue().setVisible(false);
-		panel = p.getPanel();
+		panel.add(p.getPanel());
 		panel.revalidate();
 		panel.repaint();
-		this.notify();
+		if(this.isAlive())this.notify();
 	}
 
 	public JPanel getPanel() {
 		return panel;
 	}
 
-	public void setPanel(JPanel panel) {
-		this.panel = panel;
-	}
-
+	
 	public void removerProcesso() {
 		processo = null;
-		panel = new JPanel();
-		panel.setPreferredSize(new Dimension(110, 52));
+		panel.removeAll();
+		panel.setPreferredSize(new Dimension(110, 58));
 		panel.setBackground(Color.DARK_GRAY);
 		panel.revalidate();
 		panel.repaint();
@@ -69,7 +66,7 @@ public class Core extends Thread {
 			if (processo != null) {
 				if (processo.getTempoRest() > 0) {
 					processo.diminuirTRest();
-					processo.novaRequisicao();
+					//processo.novaRequisicao();
 				} else {
 					terminarProcesso();
 
@@ -84,6 +81,8 @@ public class Core extends Thread {
 				}
 				try {
 					sleep(1000);
+					panel.revalidate();
+					panel.repaint();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

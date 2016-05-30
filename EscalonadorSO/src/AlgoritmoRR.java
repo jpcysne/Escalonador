@@ -83,12 +83,13 @@ public class AlgoritmoRR extends Escalonador {
 			if (!cores.get(i).haveProcess()) {
 				boolean pare = false;
 				while (!pare
-						&& (!aptos.isEmpty() || !aptos2.isEmpty()
+					&& (!aptos.isEmpty() || !aptos2.isEmpty()
 								|| !aptos3.isEmpty() || !aptos4.isEmpty())) {
 					switch (lastQ) {
 					case 0:
 						if (!aptos.isEmpty()) {
 							if (!aptos.get(0).alocado) {
+							
 								gm.alocar(aptos.get(0),aptos.get(0).getMemoria());
 							}
 							if (aptos.get(0).alocado) {
@@ -99,15 +100,17 @@ public class AlgoritmoRR extends Escalonador {
 								aptos.get(0).lblQuantumValue.setVisible(true);
 								aptos.get(0).lblQuantum.setVisible(true);
 								cores.get(i).setProcesso(aptos.get(0));
-								removeCores();
-								reAddCores();
+								//removeCores();
+								//reAddCores();
 								repintar();
 								aptos.remove(0);
 								pare = true;
-								break;
+								nextQ();
+								return;
 							} else {
-								abortarMemoria(aptos.get(0));
-								break;
+								abortarMemoria(aptos.get(0), aptos);
+								nextQ();
+								return;
 							}
 						}
 					case 1:
@@ -122,16 +125,18 @@ public class AlgoritmoRR extends Escalonador {
 								aptos2.get(0).lblQuantumValue.setVisible(true);
 								aptos2.get(0).lblQuantum.setVisible(true);
 								cores.get(i).setProcesso(aptos2.get(0));
-								removeCores();
-								reAddCores();
+								//removeCores();
+								//reAddCores();
 								repintar();
 								aptos2.remove(0);
 
 								pare = true;
-								break;
+								nextQ();
+								return;
 							} else {
-								abortarMemoria(aptos2.get(0));
-								break;
+								abortarMemoria(aptos2.get(0), aptos2);
+								nextQ();
+								return;
 							}
 						}
 					case 2:
@@ -146,16 +151,18 @@ public class AlgoritmoRR extends Escalonador {
 								aptos3.get(0).lblQuantumValue.setVisible(true);
 								aptos3.get(0).lblQuantum.setVisible(true);
 								cores.get(i).setProcesso(aptos3.get(0));
-								removeCores();
-								reAddCores();
+								//removeCores();
+								//reAddCores();
 								repintar();
 								aptos3.remove(0);
 
 								pare = true;
-								break;
+								nextQ();
+								return;
 							} else {
-								abortarMemoria(aptos3.get(0));
-								break;
+								abortarMemoria(aptos3.get(0), aptos3);
+								nextQ();
+								return;
 							}
 						}
 					case 3:
@@ -170,34 +177,26 @@ public class AlgoritmoRR extends Escalonador {
 								aptos4.get(0).lblQuantumValue.setVisible(true);
 								aptos4.get(0).lblQuantum.setVisible(true);
 								cores.get(i).setProcesso(aptos4.get(0));
-								removeCores();
-								reAddCores();
+								//removeCores();
+								//reAddCores();
 								repintar();
 								aptos4.remove(0);
 								pare = true;
-								break;
+								nextQ();
+								return;
 							} else {
-								abortarMemoria(aptos4.get(0));
-								break;
+								abortarMemoria(aptos4.get(0), aptos4);
+								nextQ();
+								return;
 							}
 						}
-					}
-
-					lastQ++;
-					if (lastQ >= 4) {
-						lastQ = 0;
+						
 					}
 				}
 			}
 		}
 	}
 
-	private void reAddCores() {
-		for (Core c : cores) {
-			addCores(c);
-		}
-
-	}
 
 	@Override
 	public void terminar(Core c) {
@@ -210,7 +209,16 @@ public class AlgoritmoRR extends Escalonador {
 	}
 
 	public void quantumZero(Core c) {
-		aptos.add(c.getProcesso());
+		switch(c.getProcesso().getPrioridade()){
+		case 0: aptos.add(c.getProcesso());
+			break;
+		case 1: aptos2.add(c.getProcesso());
+			break;
+		case 2: aptos3.add(c.getProcesso()); 
+			break;
+		case 3: aptos4.add(c.getProcesso());
+			break;
+		}
 		addAptos(c.getProcesso());
 		c.removerProcesso();
 		repintarCore(c);
@@ -218,6 +226,12 @@ public class AlgoritmoRR extends Escalonador {
 		escalonar();
 	}
 	public void abortarMemoria(Processo p){
+		p.abortarMemoria();
+		terminados.add(p);
+		addTerminados(p);
+		repintar();
+	}
+	public void abortarMemoria(Processo p, ArrayList<Processo> aptos){
 		p.abortarMemoria();
 		terminados.add(p);
 		removeAptos(p);
@@ -237,6 +251,12 @@ public class AlgoritmoRR extends Escalonador {
 				escalonar();
 				break;
 			}
+		}
+	}
+	private void nextQ(){
+		lastQ++;
+		if(lastQ==4){
+			lastQ=0;
 		}
 	}
 }

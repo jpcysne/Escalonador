@@ -143,9 +143,19 @@ public class TelaConfigRR {
 						lblErro4.setVisible(true);
 					} else {
 						frame.dispose();
-						Escalonador esc = new AlgoritmoRR(qntCores,qntProc,quantum,gm);
-						esc.getFrame().setLocation(300,7);
-						esc.getFrame().setVisible(true);
+						
+						//javax.swing.SwingUtilities.invokeLater(new Runnable() {
+							
+							
+							//public void run() {
+								// TODO Auto-generated method stub
+								Escalonador esc = new AlgoritmoRR(qntCores,qntProc,quantum,gm);
+								esc.getFrame().setLocation(300,7);
+								esc.getFrame().setVisible(true);
+								
+						//	}
+					//	});
+						
 					}
 				}catch(Exception e1){
 					lblErro3.setVisible(true);

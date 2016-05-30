@@ -1,7 +1,7 @@
 import java.awt.Color;
 import java.util.ArrayList;
 
-public  class AlgoritmoLTG extends Escalonador {
+public class AlgoritmoLTG extends Escalonador {
 	ArrayList<Processo> aptos = new ArrayList<Processo>();
 	ArrayList<Processo> terminados = new ArrayList<Processo>();
 	ArrayList<Core> cores = new ArrayList<Core>();
@@ -51,24 +51,26 @@ public  class AlgoritmoLTG extends Escalonador {
 			for (int i = 0; i < aptos.size(); i++) {
 				if (p.getDeadline() < aptos.get(i).getDeadline()) {
 					aptos.add(i, p);
-
+					addAptos(p,i);
 					flag = true;
 					break;
 				}
 			}
 			if (flag == false) {
 				aptos.add(p);
-
+				addAptos(p);
 			}
 		} else {
 			aptos.add(p);
+			addAptos(p);
 
 		}
 		escalonar();
-		removerAptos();
-		for (Processo a : aptos) {
-			addAptos(a);
-		}
+		
+//		removerAptos();
+//		for (Processo a : aptos) {
+//			addAptos(a);
+//		}
 	}
 
 	@Override
@@ -80,8 +82,6 @@ public  class AlgoritmoLTG extends Escalonador {
 					Bloco b=gm.alocar(aptos.get(0), aptos.get(0).getMemoria());
 					if (b!=null) {
 						cores.get(i).setProcesso(aptos.get(0));
-						removeCores();
-						reAddCores();
 						aptos.remove(0);
 						repintar();
 					} else {
@@ -94,12 +94,7 @@ public  class AlgoritmoLTG extends Escalonador {
 		}
 	}
 
-	private void reAddCores() {
-		for (Core c : cores) {
-			addCores(c);
-		}
-
-	}
+	
 
 	public void terminar(Core c) {
 		terminados.add(c.getProcesso());
